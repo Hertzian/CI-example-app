@@ -1,0 +1,49 @@
+services:
+  cigniter:
+    container_name: app
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8080:80"
+
+  # postgres14:
+  #   container_name: postgres
+  #   hostname: postgresDev
+  #   restart: always
+  #   image: postgres:14
+  #   environment:
+  #     - POSTGRES_PASSWORD=root
+  #   volumes:
+  #     - ./database:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+
+  # mysql:
+  #   container_name: mysql
+  #   hostname: mysql
+  #   image: mysql:latest
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #   volumes:
+  #     - ./database:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+
+  mariadb:
+    container_name: mariadb
+    hostname: mariadb
+    image: mariadb:latest
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - ./database:/var/lib/mysql
+      - php.ini:/usr/local/etc/php/
+    ports:
+      - "3306:3306"
+
+networks:
+  my-beauty-network:
+    external: true
